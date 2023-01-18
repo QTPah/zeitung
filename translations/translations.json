@@ -1,0 +1,92 @@
+{
+    "phrases": [
+        {
+            "id": "TEST",
+            "translations": {
+                "en": "test_en",
+                "de": "test_de",
+                "es": "test_es"
+            }
+        },
+        {
+            "id": "MISSING_CREDENTIALS",
+            "translations": {
+                "en": "Missing credentials!",
+                "de": "Fehlende Anmeldeinformationen!",
+                "es": "falta de credenciales!"
+            }
+        },
+        {
+            "id": "WRONG_VERIFICATION_CODE",
+            "translations": {
+                "en": "Wrong verification code!",
+                "de": "Falscher Verifizierungscode!",
+                "es": "código de verificación erróneo!"
+            }
+        },
+        {
+            "id": "USER_ALREADY_EXISTS",
+            "translations": {
+                "en": "User already exists!",
+                "de": "Du bist schon registriert!",
+                "es": "Ya estás regsitrado!"
+            }
+        },
+        {
+            "id": "SERVER_ERROR",
+            "translations": {
+                "en": "Server error! Please contact us.",
+                "de": "Server Fehler! Bitte kontaktiere die redaktion",
+                "es": "Error en el servidor. Póngase en contacto con nosotros."
+            }
+        },
+        {
+            "id": "VERIFICATION_CODE_MAIL_SUBJECT",
+            "translations": {
+                "en": "Verification Code",
+                "de": "Verifikationscode",
+                "es": "Código de verificación"
+            }
+        },
+        {
+            "id": "REGISTER_FIRST",
+            "translations": {
+                "en": "You need to register before you log in.",
+                "de": "Du musst dich registrieren, bevor du dich anmeldest.",
+                "es": "Debe registrarse antes de iniciar sesión."
+            }
+        },
+        {
+            "id": "WRONG_PASSWORD",
+            "translations": {
+                "en": "Wrong password!",
+                "de": "Falsches passwort!",
+                "es": "Contraseña incorrecta"
+            }
+        },
+        {
+            "id": "VERIFICATION_CODE_SENT",
+            "translations": {
+                "en": "Verification Code sent",
+                "de": "Verifikationscode wurde abgeschickt",
+                "es": "Código de verificación enviado"
+            }
+        },
+        {
+            "id": "SUCCESSFULLY_REGISTERED",
+            "translations": {
+                "en": "Successfully registered",
+                "de": "Erfolgreich registriert",
+                "es": "registrado con éxito"
+            }
+        },
+        {
+            "id": "SUCCESSFULLY_LOGGED_IN",
+            "translations": {
+                "en": "Successfully logged in",
+                "de": "Erfolgreich eingeloggt",
+                "es": "conectado correctamente"
+            }
+        }
+    ]
+}
