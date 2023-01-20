@@ -21,7 +21,7 @@ class Translator {
     }
 
     public getPhrase(id : string, lang : string) {
-        let phrase = this.translation.phrases.find((p : any) => p.id == id);
+        let phrase = this.translation.find((p : any) => p.id == id);
 
         if(!phrase) throw new Error(`Phrase with id ${id} not found.`);
 

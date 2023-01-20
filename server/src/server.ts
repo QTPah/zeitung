@@ -15,7 +15,7 @@ import { default as monk } from 'monk';
 //#region Configuring and Setting up
 
 // Initialize dotenv to allow to read .env files
-let dotenvError = dotenv.config().error;
+let dotenvError = dotenv.config({ path : process.argv[2] }).error;
 
 if(dotenvError) throw 'Failed to load environment file: ' + dotenvError;
 
@@ -39,7 +39,7 @@ app.use(express.json());
 app.use(require('cors')());
 
 // If server is not running in dev mode, serve react static files
-if(process.argv[2] != "dev") {
+if(process.argv[3] != "dev") {
     let staticPath = path.join(__dirname, '..',  '..', 'client/build');
     app.use(express.static(staticPath));
 
@@ -72,6 +72,7 @@ db.then(() => {
 
 // Set up translator (from utils)
 const translator = createTranslator(__dirname + '/../translations/translations.json');
+const defaultLanguage = 'de';
 
 logger.log(`Successfully loaded translation file (${translator.filePath})`, 'Translator');
 
@@ -84,14 +85,10 @@ const emailVerificationCache : emailVerification[] = [];
 
 app.post('/auth/register', async (req, res) => {
     let { email, password, code } = req.body;
-    let language : string = req.headers['accept-language'] || 'en';
+    let language : string = req.headers['accept-language'] || defaultLanguage;
 
     // Check if translation files support the requested language. If not switch to english
-    try {
-        translator.getPhrase('TEST', language);
-    } catch(err) {
-        language = 'en';
-    }
+    if(!translator.getPhrase('TEST', language)) language = defaultLanguage;
     
     // Check if all fields are given 
     if((!email || !password) && !code) {
@@ -174,14 +171,11 @@ app.post('/auth/register', async (req, res) => {
 
 app.post('/auth/login', async (req, res) => {
     let { email, password } = req.body;
-    let language : string = req.headers['accept-language'] || 'en';
+    let language : string = req.headers['accept-language'] || defaultLanguage;
 
     // Check if translation files support the requested language. If not switch to english
-    try {
-        translator.getPhrase('TEST', language);
-    } catch(err) {
-        language = 'en';
-    }
+    if(!translator.getPhrase('TEST', language)) language = defaultLanguage;
+
     
     // Check if all fields are given 
     if(!email || !password) {
@@ -226,19 +220,19 @@ app.post('/auth/login', async (req, res) => {
     logger.log(`"${email}" successfully logged in through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort})`, 'Auth/Login');
 });
 
-app.post('/auth/token', async (req, res) => {
+app.post('/auth/refresh_token', async (req, res) => {
     const refreshToken = req.body.refreshToken;
     
     // Check if all fields are given 
     if(!refreshToken) {
-        logger.log(`${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) is trying to get a new access token but didn't provide the refresh token.`, 'Auth/Token');
+        logger.log(`${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) is trying to get a new access token but didn't provide the refresh token.`, 'Auth/RefreshToken');
         return res.sendStatus(422);
     }
 
-    logger.log(`${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) is attempting to get a new access token`, 'Auth/Login');
+    logger.log(`${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) is attempting to get a new access token`, 'Auth/RefreshToken');
 
     if(!await db.get('users').findOne({ refreshToken })) {
-        logger.log(`${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) tried to get a new access token but the refresh token was invalid`, 'Auth/Token');
+        logger.log(`${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) tried to get a new access token but the refresh token was invalid`, 'Auth/RefreshToken');
         return res.sendStatus(403);
     }
 
@@ -247,7 +241,7 @@ app.post('/auth/token', async (req, res) => {
     try {
         user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET || '');
     } catch(error) {
-        logger.log(`${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) tried to get a new access token but the refresh token was invalid`, 'Auth/Token');
+        logger.log(`${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) tried to get a new access token but the refresh token was invalid`, 'Auth/RefreshToken');
         return res.sendStatus(403);
     }
 
@@ -257,11 +251,20 @@ app.post('/auth/token', async (req, res) => {
     res.status(200).json({ token: jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_LIFETIME }) });
 });
 
+app.post('/auth/token', authTokenMiddleware, async(req, res) => {
+    // @ts-ignore
+    if(req.user) {    
+        // @ts-ignore
+        return res.status(200).json({ user: req.user });
+    }
+    res.sendStatus(500);
+});
+
 app.delete('/auth/logout', async (req, res) => {
     const refreshToken = req.body.refreshToken;
 
     if(!refreshToken) {
-        logger.log(`${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) is trying to log out but didn't provide their refresh token.`, 'Auth/Token');
+        logger.log(`${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) is trying to log out but didn't provide their refresh token.`, 'Auth/Logout');
         return res.sendStatus(422);
     }
     

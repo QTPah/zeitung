@@ -1,0 +1,8 @@
+Logger v1.0.0 NEWS_SITE 2023-01-20T16:09:17.443Z
+
+[5.0.2023] [17:9:17] [Server] : Logger configured. Setting up services
+[5.0.2023] [17:9:17] [Main] : DEV MODE ENABLED
+[5.0.2023] [17:9:17] [Translator] : Successfully loaded translation file (/Users/qtpah/Documents/GitHub/zeitung/server/dist/../translations)
+[5.0.2023] [17:9:17] [Express/App] : App listening on port 80
+[5.0.2023] [17:9:17] [Database] : Successfully connected to database (mongodb://localhost:27017/news) with user zeitung
+[5.0.2023] [17:9:40] [Auth/Register] : e@e.e attempted to register through ::ffff:127.0.0.1(:65502) but didn't provide enough credentials

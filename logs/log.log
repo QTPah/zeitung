@@ -1,0 +1,15 @@
+Logger v1.0.0 NEWS_SITE 2023-01-20T19:02:57.651Z
+
+[5.0.2023] [20:2:57] [Server] : Logger configured. Setting up services
+[5.0.2023] [20:2:57] [Main] : DEV MODE ENABLED
+[5.0.2023] [20:2:57] [Translator] : Successfully loaded translation file (/Users/qtpah/Documents/GitHub/zeitung/server/dist/../translations)
+[5.0.2023] [20:2:57] [Express/App] : App listening on port 80
+[5.0.2023] [20:2:57] [Database] : Successfully connected to database (mongodb://localhost:27017/news) with user zeitung
+[5.0.2023] [21:7:9] [Auth/Login] : simonas.zabulionis@icloud.com is attempting to login through ::ffff:127.0.0.1(:63400)
+[5.0.2023] [21:7:9] [Auth/Login] : "simonas.zabulionis@icloud.com" successfully logged in through ::ffff:127.0.0.1(:63400)
+[5.0.2023] [21:8:18] [Auth/Login] : simonas.zabulionis@icloud.com is attempting to login through ::ffff:127.0.0.1(:63494)
+[5.0.2023] [21:8:19] [Auth/Login] : "simonas.zabulionis@icloud.com" successfully logged in through ::ffff:127.0.0.1(:63494)
+[5.0.2023] [21:31:50] [Auth/Login] : simonas.zabulionis@icloud.com attempted to log in through ::ffff:127.0.0.1(:49704) but didn't provide enough credentials
+[5.0.2023] [21:32:4] [Auth/Login] : simonas.zabulionis@icloud.com attempted to log in through ::ffff:127.0.0.1(:49770) but didn't provide enough credentials
+[5.0.2023] [21:32:10] [Auth/Login] : simonas.zabulionis@icloud.com is attempting to login through ::ffff:127.0.0.1(:49800)
+[5.0.2023] [21:32:11] [Auth/Login] : "simonas.zabulionis@icloud.com" successfully logged in through ::ffff:127.0.0.1(:49800)

@@ -1,0 +1,43 @@
+Logger v1.0.0 NEWS_SITE 2023-01-20T16:11:08.682Z
+
+[5.0.2023] [17:11:8] [Server] : Logger configured. Setting up services
+[5.0.2023] [17:11:8] [Main] : DEV MODE ENABLED
+[5.0.2023] [17:11:8] [Translator] : Successfully loaded translation file (/Users/qtpah/Documents/GitHub/zeitung/server/dist/../translations)
+[5.0.2023] [17:11:8] [Express/App] : App listening on port 80
+[5.0.2023] [17:11:8] [Database] : Successfully connected to database (mongodb://localhost:27017/news) with user zeitung
+[5.0.2023] [17:11:33] [Auth/Register] : e@e.e attempted to register through ::ffff:127.0.0.1(:49570) but didn't provide enough credentials
+[5.0.2023] [17:12:18] [Auth/Register] : simonas.zabulionis@icloud.com attempted to register through ::ffff:127.0.0.1(:49710) but didn't provide enough credentials
+[5.0.2023] [17:13:13] [Auth/Register] : simonas.zabulionis@icloud.com is verifying email address with code  through ::ffff:127.0.0.1(:49876)
+[5.0.2023] [17:13:13] [Auth/Register/Code] : Sending email verification code 362893 to simonas.zabulionis@icloud.com
+[5.0.2023] [17:13:14] [Auth/Register/Code] : Successfully sent code 362893 to simonas.zabulionis@icloud.com
+[5.0.2023] [17:13:32] [Auth/Register] : simonas.zabulionis@icloud.com is verifying email address with code 362893 through ::ffff:127.0.0.1(:49880)
+[5.0.2023] [17:13:32] [Auth/Register] : User simonas.zabulionis@icloud.com successfully registered!
+[5.0.2023] [17:13:32] [Auth/Login] : simonas.zabulionis@icloud.com is attempting to login through ::ffff:127.0.0.1(:49883)
+[5.0.2023] [17:13:32] [Auth/Login] : "simonas.zabulionis@icloud.com" successfully logged in through ::ffff:127.0.0.1(:49883)
+[5.0.2023] [17:23:18] [Auth/Register] : simonas.zabulionis@icloud.com is verifying email address with code  through ::ffff:127.0.0.1(:50863)
+[5.0.2023] [17:23:18] [Auth/Register/Code] : Sending email verification code 804600 to simonas.zabulionis@icloud.com
+[5.0.2023] [17:23:20] [Auth/Register/Code] : Successfully sent code 804600 to simonas.zabulionis@icloud.com
+[5.0.2023] [17:57:18] [Auth/Register] : dfehjbsd@efd.df attempted to register through ::ffff:127.0.0.1(:52481) but didn't provide enough credentials
+[5.0.2023] [17:57:28] [Auth/Register] : dfehjbsd@efd.df attempted to register through ::ffff:127.0.0.1(:52519) but didn't provide enough credentials
+[5.0.2023] [17:57:34] [Auth/Register] : dfehjbsd@efd.df attempted to register through ::ffff:127.0.0.1(:52545) but didn't provide enough credentials
+[5.0.2023] [19:46:24] [Auth/RefreshToken] : ::ffff:127.0.0.1(:55776) is trying to get a new access token but didn't provide the refresh token.
+[5.0.2023] [19:46:24] [Auth/RefreshToken] : ::ffff:127.0.0.1(:55777) is trying to get a new access token but didn't provide the refresh token.
+[5.0.2023] [19:46:27] [Auth/RefreshToken] : ::ffff:127.0.0.1(:55789) is trying to get a new access token but didn't provide the refresh token.
+[5.0.2023] [19:46:27] [Auth/RefreshToken] : ::ffff:127.0.0.1(:55790) is trying to get a new access token but didn't provide the refresh token.
+[5.0.2023] [19:47:30] [Auth/RefreshToken] : ::ffff:127.0.0.1(:56055) is trying to get a new access token but didn't provide the refresh token.
+[5.0.2023] [19:47:30] [Auth/RefreshToken] : ::ffff:127.0.0.1(:56056) is trying to get a new access token but didn't provide the refresh token.
+[5.0.2023] [19:47:33] [Auth/RefreshToken] : ::ffff:127.0.0.1(:56082) is trying to get a new access token but didn't provide the refresh token.
+[5.0.2023] [19:47:33] [Auth/RefreshToken] : ::ffff:127.0.0.1(:56083) is trying to get a new access token but didn't provide the refresh token.
+[5.0.2023] [19:48:14] [Auth/RefreshToken] : ::ffff:127.0.0.1(:56257) is trying to get a new access token but didn't provide the refresh token.
+[5.0.2023] [19:48:14] [Auth/RefreshToken] : ::ffff:127.0.0.1(:56258) is trying to get a new access token but didn't provide the refresh token.
+[5.0.2023] [19:54:9] [Auth/Login] : simonas.zabulionis@icloud.com is attempting to login through ::ffff:127.0.0.1(:57798)
+[5.0.2023] [19:54:9] [Auth/Login] : simonas.zabulionis@icloud.com attempted to log in through ::ffff:127.0.0.1(:57798) but didn't register themselves yet
+[5.0.2023] [19:54:30] [Auth/Login] : simonas.zabulionis@icloud.com is attempting to login through ::ffff:127.0.0.1(:57885)
+[5.0.2023] [19:54:30] [Auth/Login] : simonas.zabulionis@icloud.com attempted to log in through ::ffff:127.0.0.1(:57885) but didn't register themselves yet
+[5.0.2023] [19:54:49] [Auth/Register] : simonas.zabulionis@icloud.com is verifying email address with code  through ::ffff:127.0.0.1(:57963)
+[5.0.2023] [19:54:49] [Auth/Register/Code] : Sending email verification code 228157 to simonas.zabulionis@icloud.com
+[5.0.2023] [19:54:51] [Auth/Register/Code] : Successfully sent code 228157 to simonas.zabulionis@icloud.com
+[5.0.2023] [19:54:59] [Auth/Register] : simonas.zabulionis@icloud.com is verifying email address with code 228157 through ::ffff:127.0.0.1(:58006)
+[5.0.2023] [19:54:59] [Auth/Register] : User simonas.zabulionis@icloud.com successfully registered!
+[5.0.2023] [19:54:59] [Auth/Login] : simonas.zabulionis@icloud.com is attempting to login through ::ffff:127.0.0.1(:58008)
+[5.0.2023] [19:54:59] [Auth/Login] : "simonas.zabulionis@icloud.com" successfully logged in through ::ffff:127.0.0.1(:58008)

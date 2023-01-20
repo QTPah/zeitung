@@ -1,0 +1,99 @@
+[
+    ["en", "de"],
+
+    {
+        "index": "NAVBAR_HOME",
+        "translations": [
+            "Home",
+            "Home"
+        ]
+    },
+    {
+        "index": "NAVBAR_HELP",
+        "translations": [
+            "Help",
+            "Hilfe"
+        ]
+    },
+    {
+        "index": "LOGIN",
+        "translations": [
+            "Login",
+            "Einloggen"
+        ]
+    },
+    {
+        "index": "REGISTER",
+        "translations": [
+            "Register",
+            "Registrieren"
+        ]
+    },
+
+    {
+        "index": "SUBMIT",
+        "translations": [
+            "Submit",
+            "Einreichen"
+        ]
+    },
+
+    {
+        "index": "EMAIL",
+        "translations": [
+            "Email",
+            "Email"
+        ]
+    },
+    {
+        "index": "PASSWORD",
+        "translations": [
+            "Password",
+            "Passwort"
+        ]
+    },
+    {
+        "index": "CODE",
+        "translations": [
+            "Code",
+            "Code"
+        ]
+    },
+
+    {
+        "index": "SWITCH_TO_LOGIN",
+        "translations": [
+            "Already have an account?",
+            "Hast du schon ein Konto?"
+        ]
+    },
+    {
+        "index": "SWITCH_TO_REGISTER",
+        "translations": [
+            "Don't have an account?",
+            "Hast du noch kein konto?"
+        ]
+    },
+    {
+        "index": "CODE_WAS_SENT_TO",
+        "translations": [
+            "A code was sent to \"{}\"",
+            "Ein code wurde an \"{}\" geschickt"
+        ]
+    },
+
+    {
+        "index": "ISSUE_REGISTRATION_TITLE",
+        "translations": [
+            "Registration",
+            "Registration"
+        ]
+    },
+    {
+        "index": "ISSUE_REGISTRATION_DESCRIPTION",
+        "translations": [
+            "Having trouble signing up?",
+            "Probleme bei der registrierung?"
+        ]
+    }
+]
