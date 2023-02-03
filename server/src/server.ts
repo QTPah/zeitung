@@ -68,7 +68,12 @@ const emailTransporter = nodemailer.createTransport({
 
 
 // Set up Database (from utils)
-const db = monk(process.env.DB_URL || 'mongodb://localhost:27017/news');
+const db = monk(process.env.DB_URL || 'mongodb://localhost:27017/news', {
+    auth: {
+        user: process.env.DB_USER || "",
+        password: process.env.DB_PASSWORD || ""
+    }
+});
 
 db.then(() => {
     logger.log(`Successfully connected to database (${process.env.DB_URL}) with user ${process.env.DB_USER}`, 'Database');
