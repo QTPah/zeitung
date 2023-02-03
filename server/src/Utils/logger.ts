@@ -44,7 +44,7 @@ class Logger {
 
                 // Delete oldest files exeeding the max amount of logs
                 for(let i = this.options.maxLogFiles; i < files.length; i++) {
-                    fs.rmSync(path.join(this.options.logsPath, files[i]));
+                    fs.unlinkSync(path.join(this.options.logsPath, files[i]));
                 }
             }
         };
