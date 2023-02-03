@@ -1,0 +1,75 @@
+body {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.navbar {
+    background-color: #2b2b2b;
+}
+
+.shade1 {
+    background-color: #242424;
+}
+
+.shade2 {
+    background-color: #4f4f4f;
+}
+
+.shade3 {
+    background-color: #1e1e1e;
+}
+
+
+.textInput {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+.textareaInput {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+.addButton {
+    background-color: #3db81f;
+}
+
+/* Dropdown is buggy so we declare it seperatly. */
+.dropdown {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+
+.active {
+    background-color: #353535;
+}
+
+
+
+.button {
+    background-color: #313131;
+    color: white;
+}
+
+.button:hover {
+    background-color: #555;
+}
+
+.button:active {
+    background-color: rgb(69, 69, 69);
+}
+
+.button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+
+
+/* Popup stuff */
+
+.closeBtn {
+    color: white;
+}

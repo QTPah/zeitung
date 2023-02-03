@@ -1,0 +1,42 @@
+.postCreatorPopup {
+    padding: 15px;
+}
+
+.textInput {
+    width: 95%;
+}
+
+.textareaInput {
+    width: 95%;
+    height: 10rem;
+    resize: none;
+}
+
+.imageInput {
+    width: 95%;
+}
+
+
+.postsContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0.5rem;
+    margin-top: 0rem;
+}
+
+.addButton {
+    border-radius: 100px;
+    width: 4rem;
+    height: 4rem;
+    font-size: 40px;
+    border: none;
+    margin: 1rem;
+    margin-bottom: 0;
+}
+
+
+h1 {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}

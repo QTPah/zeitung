@@ -14,9 +14,7 @@ const useLanguage = () => {
 
             if(args.length == 0) return trans;
 
-
-            for(let i = 0; i < args.length; i++) trans.replace('{}', args[i]);
-            
+            for(let i = 0; i < args.length; i++) trans = trans.replace('{}', args[i]);
             return trans;
         }
     }

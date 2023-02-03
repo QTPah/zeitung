@@ -14,6 +14,13 @@
         }
     },
     {
+        "id": "MISSING_FIELDS",
+        "translations": {
+            "en": "Missing fields!",
+            "de": "Fehlende Felder!"
+        }
+    },
+    {
         "id": "WRONG_VERIFICATION_CODE",
         "translations": {
             "en": "Wrong verification code!",
@@ -74,6 +81,20 @@
         "translations": {
             "en": "Successfully logged in",
             "de": "Erfolgreich eingeloggt"
+        }
+    },
+    {
+        "id": "UPLOAD_COOLDOWN",
+        "translations": {
+            "en": "You're on a upload cooldown. Retry in {}.",
+            "de": "Du ladest du schnell bilder hoch. Bitte warte noch {}"
+        }
+    },
+    {
+        "id": "MISSING_PERMISSIONS",
+        "translations": {
+            "en": "You don't have the required permissions to do this.",
+            "de": "Du hast nicht die nötigen rechte um dies zu tun."
         }
     }
 ]

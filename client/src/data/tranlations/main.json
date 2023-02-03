@@ -95,5 +95,71 @@
             "Having trouble signing up?",
             "Probleme bei der registrierung?"
         ]
+    },
+    {
+        "index": "POSTS",
+        "translations": [
+            "Posts",
+            "Posts"
+        ]
+    },
+    {
+        "index": "SETTINGS",
+        "translations": [
+            "Settings",
+            "Einstellungen"
+        ]
+    },
+    {
+        "index": "GENERAL",
+        "translations": [
+            "General",
+            "Allgemein"
+        ]
+    },
+    {
+        "index": "ACCOUNT",
+        "translations": [
+            "Account",
+            "Konto"
+        ]
+    },
+
+    {
+        "index": "LANGUAGE",
+        "translations": [
+            "Language",
+            "Sprache"
+        ]
+    },
+    {
+        "index": "LANGUAGES",
+        "translations": [
+            "English",
+            "Deutsch"
+        ]
+    },
+    {
+        "index": "THEME",
+        "translations": [
+            "Theme",
+            "Erscheinungsbild"
+        ]
+    },
+    {
+        "index": "PROFILE_PICTURE",
+        "translations": [
+            "Profile Picture",
+            "Profilbild"
+        ]
+    },
+
+
+    {
+        "index": "LOGOUT",
+        "translations": [
+            "Log out",
+            "Abmelden"
+        ]
     }
 ]

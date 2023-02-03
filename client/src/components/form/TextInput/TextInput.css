@@ -1,0 +1,23 @@
+.textInputContainer {
+    margin-bottom: 1rem;
+}
+
+.textInputLabel {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.textInput {
+    width: auto;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1.2rem;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.textInput:focus {
+    border-color: #333;
+    outline: none;
+}

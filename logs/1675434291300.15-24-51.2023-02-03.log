@@ -1,0 +1,10 @@
+Logger v1.0.0 NEWS_SITE 2023-02-03T14:15:04.291Z
+
+[5.1.2023] [15:15:4] [Server] : Logger configured. Setting up services
+[5.1.2023] [15:15:4] [Main/Express] : Setting static directory to be served to /Users/qtpah/Documents/GitHub/zeitung/client/dist
+[5.1.2023] [15:15:4] [Translator] : Successfully loaded translation file (/Users/qtpah/Documents/GitHub/zeitung/server/dist/../translations)
+[5.1.2023] [15:15:4] [Express/App] : App listening on port 80
+[5.1.2023] [15:15:4] [Database] : Successfully connected to database (mongodb://localhost:27017/news) with user zeitung
+[5.1.2023] [15:15:6] [Auth/RefreshToken] : ::1(:52797) is trying to get a new access token but didn't provide the refresh token.
+[5.1.2023] [15:15:22] [Auth/Login] : simonas.zabulionis@icloud.com is attempting to login through ::1(:52803)
+[5.1.2023] [15:15:23] [Auth/Login] : "simonas.zabulionis@icloud.com" successfully logged in through ::1(:52803)

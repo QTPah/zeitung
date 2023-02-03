@@ -1,0 +1,37 @@
+@font-face {
+    font-family: 'goofy';
+    src: local('goofy'), url(../assets/fonts/goofy.ttf) format('opentype');
+}
+
+
+body {
+    font-family: goofy;
+    background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    -webkit-background-clip: text;
+
+    background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: rainbow_animation 1s ease-in-out infinite;
+    background-size: 400% 100%;
+
+    color: #FF0000;
+}
+
+.navbar {
+    background-color: #00FF00;
+}
+
+.shade1 {
+    background-color: #0000FF;
+}
+
+@keyframes rainbow_animation {
+    0%,100% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 100% 0;
+    }
+}

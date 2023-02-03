@@ -1,0 +1,17 @@
+.imageInputContainer {
+    margin-bottom: 1rem;
+}
+
+.imageInputLabel {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.imageInput {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1.2rem;
+}

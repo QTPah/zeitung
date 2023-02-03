@@ -1,0 +1,17 @@
+.profilePicture {
+    height: 100%;
+
+    border-radius: 50%;
+
+    display: inline-block;
+
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.profilePictureContainer {
+    width: 100%;
+    text-align: center;
+}

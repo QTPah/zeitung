@@ -1,0 +1,43 @@
+body {
+    background-color: white;
+}
+
+.navbar {
+    background-color: #d5d5d5;
+}
+
+
+
+.shade1 {
+    background-color: #e8e8e8;
+}
+
+.shade2 {
+    background-color: #efefef;
+}
+
+
+
+.active {
+    background-color: #c8c8c8;
+}
+
+
+
+.button {
+    background-color: #313131;
+    color: white;
+}
+
+.button:hover {
+    background-color: rgb(81, 81, 81);
+}
+
+.button:active {
+    background-color: rgb(106, 106, 106);
+}
+
+.button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

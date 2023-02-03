@@ -11,12 +11,20 @@ import usePopup from '../../hooks/Popup/usePopup';
 
 import RegisterIssue from './Issues/RegisterIssue';
 import useLanguage from '../../hooks/Language/useLanguage';
+import { useEffect } from 'react';
 
 
 const Help = () => {
 
     const [popup, popupElement] = usePopup();
     const [getLang] = useLanguage();
+
+    useEffect(() => {
+        if(new URLSearchParams(location.search).get('goofy')) {
+            console.log('eeee');
+            localStorage.setItem('theme', 'goofy');
+        }
+    }, []);
 
     return (
         <>

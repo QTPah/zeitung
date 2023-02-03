@@ -13,36 +13,34 @@ export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState();
 
-    const updateTokens = async () => {
-        if(!await checkToken()) {
-            await refreshToken();
-        }
-    }
-
     useEffect(() => {
-        updateTokens();
+        checkToken();
     }, []);
 
-    async function checkToken() {
+    async function checkToken(autoRefresh = true) {
         if(!localStorage.getItem('token')) return false;
         let res = await Axios.post('/auth/token', {}, { headers: { 'authorization': localStorage.getItem('token'), 'accept-language': localStorage.getItem('lang') }, validateStatus: () => true });
 
-        if(res.status === 200 && res.data.user) {
+        if(res.status === 200) {
             setUser(res.data.user);
             return true;
-        } else {
-            setUser();
-            return false;
+        } else if(autoRefresh) {
+            if(!await refreshToken()) {
+                setUser();
+                return false;
+            }
+
+            return await checkToken(false);
         }
+
+        return false;
     }
 
     async function refreshToken() {
-        if(!localStorage.getItem('refresh_token')) return false;
-        let res = await Axios.post('/auth/refresh_token', { refreshToken: localStorage.getItem('refresh_token') } , { headers: { 'authorization': localStorage.getItem('token'), 'accept-language': localStorage.getItem('lang') }, validateStatus: () => true });
+        let res = await Axios.post('/auth/refresh_token', { refreshToken: localStorage.getItem('refreshToken') } , { headers: { 'authorization': localStorage.getItem('token'), 'accept-language': localStorage.getItem('lang') }, validateStatus: () => true });
 
-        if(res.status === 200 && res.data.token) {
+        if(res.status === 200) {
             localStorage.setItem('token', 'Bearer ' + res.data.token);
-            await checkToken();
             return true;
         } else {
             return false;
@@ -79,10 +77,34 @@ export const AuthProvider = ({ children }) => {
         return { err: res.data.err };
     }
 
+    async function logout() {
+        await Axios.delete('/auth/logout', { headers: { 'authorization': localStorage.getItem('token'), 'accept-language': localStorage.getItem('lang') }, validateStatus: () => true });
+
+        localStorage.setItem('token', '');
+        localStorage.setItem('refreshToken', '');
+
+        return true;
+    }
+
+    function hasPermission(permission) {
+        if(!user) return false;
+
+        let hasPermission = false;
+
+        user.status.roles.forEach(role => {
+            if(role.permissions.includes(permission)) {
+                hasPermission = true;
+            }
+        });
+
+        return hasPermission;
+    }
+
     const value = {
         user,
         checkToken, refreshToken,
-        login, register
+        login, register, logout,
+        hasPermission
     }
 
     return (

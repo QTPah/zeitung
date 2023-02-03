@@ -1,0 +1,7 @@
+Logger v1.0.0 NEWS_SITE 2023-02-03T14:25:26.418Z
+
+[5.1.2023] [15:25:26] [Server] : Logger configured. Setting up services
+[5.1.2023] [15:25:26] [Main/Express] : Setting static directory to be served to /Users/qtpah/Documents/GitHub/zeitung/client/dist
+[5.1.2023] [15:25:26] [Translator] : Successfully loaded translation file (/Users/qtpah/Documents/GitHub/zeitung/server/dist/../translations)
+[5.1.2023] [15:25:26] [Express/App] : App listening on port 80
+[5.1.2023] [15:25:26] [Database] : Successfully connected to database (mongodb://localhost:27017/news) with user zeitung

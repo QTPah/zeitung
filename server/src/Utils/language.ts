@@ -20,16 +20,24 @@ class Translator {
         this.filePath = path.dirname(translationFilePath);
     }
 
-    public getPhrase(id : string, lang : string) {
+    public getPhrase(id : string, lang : string, ...args : string[]) {
         let phrase = this.translation.find((p : any) => p.id == id);
 
         if(!phrase) throw new Error(`Phrase with id ${id} not found.`);
 
+        let translation;
+
         try {
-            return phrase.translations[lang];
+            translation = phrase.translations[lang];
         } catch (err) {
             throw new Error(`Phrase thranslation into ${lang} not found.`);
         }
+
+        if(args.length === 0) return translation;
+
+        for(let i = 0; i < args.length; i++) translation.replace('{}', args[i]);
+
+        return translation;
     }
 }
 

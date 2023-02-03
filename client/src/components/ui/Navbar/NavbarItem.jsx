@@ -1,13 +1,14 @@
 import React from 'react';
-import styles from './Navbar.module.css';
 import { useNavigate } from 'react-router-dom';
+
+import './Navbar.css';
 
 const NavbarItem = ({ href, value }) => {
 
     const navigate = useNavigate();
 
   return (
-        <li className={styles.navbarLink}>
+        <li className="navbarLink">
             <a onClick={() => navigate(href)}>{value}</a>
         </li>
   );
