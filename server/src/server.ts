@@ -371,11 +371,9 @@ app.post('/api/upload_profile_picture', authTokenMiddleware, async (req : IGetUs
         return Error(translator.getPhrase('UPLOAD_COOLDOWN', language, new Date(dbUser.profilePictureImageIndex.split('.')[0], 16 - Date.now()).getUTCSeconds().toString()), 400, res);
     }
 
-    try {
-        fs.rmSync(path.join(__dirname, process.env.STATIC_PATH || 'static', 'images', dbUser.profilePictureIndex));
-    } catch(error) {
-        if(dbUser.profilePictureImageIndex) logger.log(`${req.user.email} discovered an invalid profile picture image index ${dbUser.profilePictureIndex} whilst trying to update their profile picture`, 'API/ProfilePictureUpload')
-    }
+    fs.unlink(path.join(__dirname, process.env.STATIC_PATH || 'static', 'images', dbUser.profilePictureIndex), err => {
+        logger.log(`${req.user.email} removed their old profile picture (index ${dbUser.profilePictureIndex}) whilst trying to update their profile picture`, 'API/ProfilePictureUpload');
+    });
 
     // @ts-ignore
     req.imageIndex = `${Date.now().toString(16)}.${crypto.randomBytes(8).toString('hex')}`;
