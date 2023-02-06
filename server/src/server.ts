@@ -341,7 +341,7 @@ app.delete('/auth/logout', authTokenMiddleware, async (req : IGetUserAuthInfoReq
 
 const imageStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'static/images');
+        cb(null, path.join(__dirname, process.env.STATIC_PATH || 'static', 'images'));
     },
     filename: (req, file, cb) => {
         // @ts-ignore
@@ -372,7 +372,7 @@ app.post('/api/upload_profile_picture', authTokenMiddleware, async (req : IGetUs
     }
 
     try {
-        fs.rmSync('static/images/'+dbUser.profilePictureIndex);
+        fs.rmSync(path.join(__dirname, process.env.STATIC_PATH || 'static', 'images', dbUser.profilePictureIndex));
     } catch(error) {
         if(dbUser.profilePictureImageIndex) logger.log(`${req.user.email} discovered an invalid profile picture image index ${dbUser.profilePictureIndex} whilst trying to update their profile picture`, 'API/ProfilePictureUpload')
     }
@@ -430,7 +430,7 @@ app.post('/api/upload_image', authTokenMiddleware, async (req : IGetUserAuthInfo
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'static/files');
+        cb(null, path.join(__dirname, process.env.STATIC_PATH || 'static', 'files'));
     },
     filename: (req, file, cb) => {
         // @ts-ignore
@@ -478,9 +478,9 @@ app.get('/api/download', authTokenMiddleware, async (req : IGetUserAuthInfoReque
 
     let image : Buffer;
     try {
-        image = fs.readFileSync(`static/images/${index}`);
+        image = fs.readFileSync(path.join(__dirname, process.env.STATIC_PATH || `images`, index.toString()));
     } catch(error) {
-        logger.log(`${req.user.email} tried to get image but provided index as invalid`, 'Image/Get');
+        logger.log(`${req.user.email} tried to get image but provided an invalid index (${index})`, 'Image/Get');
         return res.sendStatus(404);
     }
 
@@ -499,9 +499,9 @@ app.get('/api/get_image', authTokenMiddleware, async (req : IGetUserAuthInfoRequ
 
     let image : Buffer;
     try {
-        image = fs.readFileSync(`static/images/${index}`);
+        image = fs.readFileSync(path.join(__dirname, process.env.STATIC_PATH || 'images', index.toString()));
     } catch(error) {
-        logger.log(`${req.user.email} tried to get image but provided index as invalid`, 'Image/Get');
+        logger.log(`${req.user.email} tried to get image but provided an invalid index (${index})`, 'Image/Get');
         return res.sendStatus(404);
     }
 
