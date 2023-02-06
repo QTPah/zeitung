@@ -30,7 +30,8 @@ const AccountSettings = () => {
         <div style={{width: '50%', margin: 'auto'}}>
           {profilePicture && <ProfilePicture image={profilePicture} size="10rem" />}
           <input type="file" accept="image/*" onChange={async (e) => {
-            api.getImage(await api.uploadProfilePicture(fromLocation(e.target.files[0], 'profilePicture'))).then(image => setProfilePicture(image));
+            await api.uploadProfilePicture(fromLocation(e.target.files[0], 'profilePicture'));
+            location.reload();
           }} />
         </div>
       </Setting>
