@@ -18,8 +18,6 @@ const PostViewer = () => {
         api.getPost(postId).then((res) => {
             setPost(res);
             
-            console.log(res.body);
-
             setHtml(res.body);
         });
     }, []);

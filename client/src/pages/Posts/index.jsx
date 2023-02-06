@@ -22,7 +22,6 @@ const Posts = () => {
 
     const setupPosts = async () => {
         let res = await api.getPosts();
-        console.log(res);
         let _posts = [];
         for(let i = 0; i < res.length; i++) {
             let image = await api.getImage(res[i].image);
@@ -41,7 +40,6 @@ const Posts = () => {
         <>
             <Navbar />
             {auth.hasPermission("CREATE_POSTS") && <button className='addButton' onClick={() => {
-                console.log(posts);
                 popup("Create Post", <PostCreator />);
             }}>+</button>}
             <div className='postsContainer'>
