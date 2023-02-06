@@ -499,7 +499,7 @@ app.get('/api/get_image', authTokenMiddleware, async (req : IGetUserAuthInfoRequ
 
     let image : Buffer;
     try {
-        image = fs.readFileSync(path.join(__dirname, process.env.STATIC_PATH || 'images', index.toString()));
+        image = fs.readFileSync(path.join(__dirname, process.env.STATIC_PATH || 'static', 'images', index.toString()));
     } catch(error) {
         logger.log(`${req.user.email} tried to get image but provided an invalid index (${index})`, 'Image/Get');
         return res.sendStatus(404);
