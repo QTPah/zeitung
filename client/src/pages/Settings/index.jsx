@@ -9,7 +9,7 @@ import './Settings.css';
 const Settings = () => {
   const [getLang] = useLanguage();
 
-  const [activeGroup, setActiveGroup] = useState(getLang("GENERAL"));
+  const activeGroup = new URLSearchParams(location.search).get("setting") || getLang("GENERAL");
 
   const settingsGroups = [
     [getLang("GENERAL"), <GeneralSettings />],
@@ -25,7 +25,9 @@ const Settings = () => {
             <div className="sidebarGroupList">
 
                 {settingsGroups.map(g => {
-                    return <div key={g[0]} className={`sidebarGroup ${activeGroup === g[0] && "active"}`} onClick={() => setActiveGroup(g[0])}>{g[0]}</div>
+                    return <div key={g[0]} className={`sidebarGroup ${activeGroup === g[0] && "active"}`} onClick={() => {
+                      location.href += `?setting=${g[0]}`;
+                    }}>{g[0]}</div>
                 })}
             </div>
             </div>
