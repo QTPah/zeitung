@@ -7,16 +7,15 @@ export class Blacklist {
     public filePath : string;
 
     constructor(blacklistFilePath : string) {
-        if(!fs.existsSync(blacklistFilePath)) throw new Error(`Blacklist file not found: ${blacklistFilePath}`);
+        if(!fs.existsSync(path.dirname(blacklistFilePath))) throw new Error(`Blacklist file not found: ${path.dirname(blacklistFilePath)}`);
 
         try {
-            let list = JSON.parse(fs.readFileSync(blacklistFilePath).toString('utf8'));
-            this.list = list;
+            this.list = JSON.parse(fs.readFileSync(blacklistFilePath).toString('utf8'));
         } catch(error) {
             throw new Error('Invalid blacklist file!');
         }
 
-        this.filePath = blacklistFilePath;
+        this.filePath = path.dirname(blacklistFilePath);
     }
 
     public isBlacklisted(email : string) {
