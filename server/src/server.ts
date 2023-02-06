@@ -12,9 +12,10 @@ import * as crypto from 'crypto';
 import * as fs from 'fs';
 
 import { createLogger } from './Utils/logger';
-import { Error, authTokenMiddleware } from './Utils/httpUtils';
+import { Error } from './Utils/httpUtils';
 import { createTranslator } from './Utils/language';
-import { hasPermission, Permission, Role } from './Utils/permissions';
+import { hasPermission, Role } from './Utils/permissions';
+import { Blacklist } from './Utils/blacklist';
 import { default as monk } from 'monk';
 
 //#region Configuring and Setting up
@@ -69,10 +70,10 @@ const emailTransporter = nodemailer.createTransport({
 
 // Set up Database (from utils)
 const db = monk(process.env.DB_URL || 'mongodb://localhost:27017/news', {
-    auth: {
-        user: process.env.DB_USER || "",
-        password: process.env.DB_PASSWORD || ""
-    }
+    // auth: {
+    //     user: process.env.DB_USER || "",
+    //     password: process.env.DB_PASSWORD || ""
+    // }
 });
 
 db.then(() => {
@@ -86,12 +87,44 @@ const defaultLanguage = 'de';
 
 logger.log(`Successfully loaded translation file (${translator.filePath})`, 'Translator');
 
+// Set up blacklist (from utils)
+Blacklist.instance = new Blacklist(process.env.BLACKLIST_PATH || path.join(__dirname, '/../blacklist.json'))
+const blacklist = Blacklist.instance;
+
+logger.log(`Successfully loaded blacklist file (${blacklist.filePath})`, 'Blacklist');
+
 //#endregion
 
 //#region Set up types and interfaces
 
 export interface IGetUserAuthInfoRequest extends express.Request {
     user?: any
+}
+
+// AUTHENTICATION MIDDLEWARE
+async function authTokenMiddleware(req : IGetUserAuthInfoRequest, res : express.Response, next : express.NextFunction) {
+    // Grab the token from the request header and remove the "Bearer" from the header (header is "Bearer [TOKEN]")
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  // check if token exists
+  if(!token) return res.sendStatus(401);
+  if(!process.env.ACCESS_TOKEN_SECRET) throw 'Access Token Secret (ACCESS_TOKEN_SECRET) not defined in .env!';
+
+  // Try to decrypt the token with env.ACCESS_TOKEN_SECRET
+  try {
+      let user : any = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+      if(!user) return res.sendStatus(403);
+
+      if(Blacklist.instance.isBlacklisted(user.email)) return res.status(403).json({ err: 'BLACKLIST' });
+
+      req.user = await db.get('users').findOne({ _id: user._id });
+  } catch(error) {
+      return res.sendStatus(403);
+  }
+
+  next();
 }
 
 //#endregion
@@ -115,12 +148,17 @@ app.post('/auth/register', async (req, res) => {
         return Error(translator.getPhrase('MISSING_CREDENTIALS', language), 400, res);
     }
 
+    // Only allow emails ending with @edu.sbl.ch or @sbl.ch
+    if(email.split('@')[1] != 'edu.sbl.ch' && email.split('@')[1] != 'sbl.ch') {
+        logger.log(`${email} tried to register with wrong email address through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort})`, 'Auth/Register');
+        return Error(translator.getPhrase('WRONG_EMAIL', language), 400, res);
+    }
+
     // Inline if statement checks if user tries to register or verify email address
     logger.log(code === undefined ?
         `${email} is attempting to register through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort})` :
         `${email || 'Someone'} is verifying email address with code ${code} through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort})`, 'Auth/Register');
 
-    
     // Handle email verification
     if(code) {
         const verifiedCredentials = emailVerificationCache.find(x => x.code == code);
@@ -146,7 +184,7 @@ app.post('/auth/register', async (req, res) => {
                 email: verifiedCredentials.email,
                 password: hashedPassword,
                 status: {
-                    roles: [new Role('user', [Permission.VIEW_POSTS])],
+                    roles: [new Role('user', ["VIEW_POSTS"])],
                     score: 0,
                     badges: []
                 }
@@ -203,6 +241,11 @@ app.post('/auth/login', async (req, res) => {
     }
 
     logger.log(`${email} is attempting to login through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort})`, 'Auth/Login');
+
+    if(blacklist.isBlacklisted(email)) {
+        logger.log(`${email} is blacklisted`, 'Auth/Login');
+        return Error(translator.getPhrase('BLACKLISTED', language), 403, res);
+    }
 
     const user = await db.get('users').findOne({ email:  { $regex: `^${email.split('@')[0]}` } });
 
@@ -482,7 +525,7 @@ app.post('/api/post/create', authTokenMiddleware, (req : IGetUserAuthInfoRequest
         return Error(translator.getPhrase('MISSING_FIELDS', language), 400, res);
     }
 
-    if(!hasPermission(req.user, Permission.CREATE_POSTS)) {
+    if(!hasPermission(req.user, "CREATE_POSTS")) {
         logger.log(`${req.user.email} attempted to create post through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) but didn't have enough permissions`, 'API/CreatePost');
         return Error(translator.getPhrase('MISSING_PERMISSIONS', language), 400, res);
     }
@@ -508,7 +551,7 @@ app.get('/api/get_post', authTokenMiddleware, async (req : IGetUserAuthInfoReque
         return Error(translator.getPhrase('MISSING_FIELDS', language), 400, res);
     }
 
-    if(!hasPermission(req.user, Permission.VIEW_POSTS)) {
+    if(!hasPermission(req.user, "VIEW_POSTS")) {
         logger.log(`${req.user.email} attempted to get post through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) but didn't have enough permissions`, 'API/GetPost');
         return Error(translator.getPhrase('MISSING_PERMISSIONS', language), 400, res);
     }
@@ -531,7 +574,7 @@ app.get('/api/get_posts', authTokenMiddleware, async (req : IGetUserAuthInfoRequ
     // Check if translation files support the requested language. If not switch to english
     if(!translator.getPhrase('TEST', language)) language = defaultLanguage;
 
-    if(!hasPermission(req.user, Permission.VIEW_POSTS)) {
+    if(!hasPermission(req.user, "VIEW_POSTS")) {
         logger.log(`${req.user.email} attempted to get post through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) but didn't have enough permissions`, 'API/GetPost');
         return Error(translator.getPhrase('MISSING_PERMISSIONS', language), 400, res);
     }
@@ -539,8 +582,23 @@ app.get('/api/get_posts', authTokenMiddleware, async (req : IGetUserAuthInfoRequ
     res.status(200).json({ posts: await db.get('posts').find() });
 });
 
-//#endregion
+app.get('/api/get_users', authTokenMiddleware, async (req : IGetUserAuthInfoRequest, res) => {
+    let language : string = req.headers['accept-language'] || defaultLanguage;
 
+    // Check if translation files support the requested language. If not switch to english
+    if(!translator.getPhrase('TEST', language)) language = defaultLanguage;
+
+    if(!hasPermission(req.user, "VIEW_USERS")) {
+        logger.log(`${req.user.email} attempted to get users through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) but didn't have enough permissions`, 'API/GetUsers');
+        return Error(translator.getPhrase('MISSING_PERMISSIONS', language), 400, res);
+    }
+
+    logger.log(`${req.user.email} successfully got users through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort})`, 'API/GetUsers');
+
+    res.status(200).json({ users: await db.get('users').find() });
+});
+
+//#endregion
 
 if(process.argv[3] != "dev") {
     app.get('*', (req, res) => {

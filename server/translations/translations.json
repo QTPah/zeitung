@@ -96,5 +96,19 @@
             "en": "You don't have the required permissions to do this.",
             "de": "Du hast nicht die nötigen rechte um dies zu tun."
         }
+    },
+    {
+        "id": "BLACKISTED",
+        "translations": {
+            "en": "You're blacklisted.",
+            "de": "Du bist auf der blacklist."
+        }
+    },
+    {
+        "id": "WRONG_EMAIL",
+        "translations": {
+            "en": "Email must end with @sbl.ch or @edu.sbl.ch!",
+            "de": "Email muss mit @sbl.ch oder @edu.sbl.ch enden!"
+        }
     }
 ]

@@ -4,14 +4,15 @@ import Card from '../../components/form/Card/Card'
 
 import Navbar from '../../components/ui/Navbar/Navbar'
 import { useApi } from '../../contexts/ApiContext/ApiContext'
+import { useAuth } from '../../contexts/AuthContext/AuthContext'
 import usePopup from '../../hooks/Popup/usePopup'
 import PostCreator from './postCreator'
-import PostViewer from './PostViewer'
 
 
 const Posts = () => {
 
     const api = useApi();
+    const auth = useAuth();
     const navigate = useNavigate();
 
     const [postViewer, setPostViewer] = useState();
@@ -39,10 +40,10 @@ const Posts = () => {
     return (
         <>
             <Navbar />
-            <button className='addButton' onClick={() => {
+            {auth.hasPermission("CREATE_POSTS") && <button className='addButton' onClick={() => {
                 console.log(posts);
                 popup("Create Post", <PostCreator />);
-            }}>+</button>
+            }}>+</button>}
             <div className='postsContainer'>
                 {posts && posts}
             </div>

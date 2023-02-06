@@ -7,14 +7,13 @@ import { useAuth } from "./contexts/AuthContext/AuthContext";
 import { useTheme } from "./contexts/ThemeContext/ThemeContext";
 import Help from "./pages/Help";
 
-import permissions from "./data/permissions.json";
-
 import Home from "./pages/Home/"
 import Login from "./pages/Login";
 import Posts from "./pages/Posts";
 import PostViewer from "./pages/Posts/PostViewer";
 import Register from "./pages/Register";
 import Settings from "./pages/Settings";
+import Dashboard from "./pages/Dashboard";
 
 
 
@@ -32,8 +31,10 @@ function App() {
 
           <Route path="/" element={<Home />} />
 
-          {(auth.user && auth.hasPermission(permissions.indexOf("VIEW_POSTS"))) && <Route path="/posts" element={<Posts />} />}
-          {(auth.user && auth.hasPermission(permissions.indexOf("VIEW_POSTS"))) && <Route path="/posts/view" element={<PostViewer />} />}
+          {(auth.user && auth.hasPermission("VIEW_POSTS")) && <Route path="/posts" element={<Posts />} />}
+          {(auth.user && auth.hasPermission("VIEW_POSTS")) && <Route path="/posts/view" element={<PostViewer />} />}
+
+          {(auth.user && auth.hasPermission("ADMIN")) && <Route path="/dashboard" element={<Dashboard />} />}
 
           <Route path="/help" element={<Help />} />
 

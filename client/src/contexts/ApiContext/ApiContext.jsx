@@ -98,11 +98,23 @@ export const ApiProvider = ({ children }) => {
         return res.data.err;
     }
 
+
+    async function getUsers() {
+        let res = await Axios.get('/api/get_users', { headers: { 'authorization': localStorage.getItem('token'), 'accept-language': localStorage.getItem('lang') }, validateStatus: () => true });
+
+        if(res.status === 200) {
+            return res.data.users;
+        }
+
+        return false;
+    }
+
     const value = {
         uploadProfilePicture, uploadImage,
         getImage,
         getPost, getPosts, post,
-        upload, download
+        upload, download,
+        getUsers
     };
 
     return (
