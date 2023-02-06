@@ -26,6 +26,8 @@ class Logger {
     constructor(options : LoggerOptions) {
         this.options = options;
 
+        this.options.logsPath = path.join(__dirname, this.options.logsPath);
+
         this.setUpLogs();
     }
 
