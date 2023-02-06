@@ -26,7 +26,7 @@ const Settings = () => {
 
                 {settingsGroups.map(g => {
                     return <div key={g[0]} className={`sidebarGroup ${activeGroup === g[0] && "active"}`} onClick={() => {
-                      location.href += `?setting=${g[0]}`;
+                      location.href = `?setting=${g[0]}`;
                     }}>{g[0]}</div>
                 })}
             </div>
