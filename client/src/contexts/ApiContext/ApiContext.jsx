@@ -143,7 +143,7 @@ export const ApiProvider = ({ children }) => {
         let res = await Axios.delete('/api/delete_role', { data: { id }, headers: { 'authorization': localStorage.getItem('token'), 'accept-language': localStorage.getItem('lang') }, validateStatus: () => true });
 
         if(res.status === 200) {
-            return true;
+            return res.data.roles;
         }
 
         return res.data.err;
@@ -159,6 +159,16 @@ export const ApiProvider = ({ children }) => {
         return res.data.err;
     }
 
+    async function updateRole(roleId, name, permissions) {
+        let res = await Axios.put('/api/update_role', { roleId, name, permissions }, { headers: { 'authorization': localStorage.getItem('token'), 'accept-language': localStorage.getItem('lang') }, validateStatus: () => true });
+
+        if(res.status === 200) {
+            return res.data.roles;
+        }
+
+        return res.data.err;
+    }
+
     const value = {
         uploadProfilePicture, uploadImage,
         getImage,
@@ -166,7 +176,7 @@ export const ApiProvider = ({ children }) => {
         upload, download,
         getUsers,
         addRole, removeRole,
-        createRole, deleteRole,
+        createRole, deleteRole, updateRole,
         getRoles
     };
 

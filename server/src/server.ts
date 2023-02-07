@@ -649,7 +649,7 @@ app.delete('/api/delete_role', authTokenMiddleware, async (req : IGetUserAuthInf
 
     logger.log(`${req.user.email} successfully deleted role ${id} through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort})`, 'API/DeleteRole');
 
-    res.status(200);
+    res.status(200).json({ roles: hasPermission(req.user, "VIEW_ROLES") ? await db.get('roles').find() : [] });
 });
 
 app.post('/api/add_role', authTokenMiddleware, async (req : IGetUserAuthInfoRequest, res) => {
@@ -677,7 +677,8 @@ app.post('/api/add_role', authTokenMiddleware, async (req : IGetUserAuthInfoRequ
         return Error(translator.getPhrase('ROLE_NOT_FOUND', language), 400, res);
     }
 
-    const user = await db.get('users').findOneAndUpdate({ _id: userId }, { $push: { roles: role } });
+    await db.get('users').update({ _id: userId }, { $push: { roles: role } });
+    const user = await db.get('users').findOne({ _id: userId });
 
     logger.log(`${req.user.email} successfully added role ${role.name} (${role._id}) to user ${user.email} through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort})`, 'API/AddRole');
 
@@ -728,7 +729,32 @@ app.get('/api/get_roles', authTokenMiddleware, async (req : IGetUserAuthInfoRequ
     }
 
     const roles = await db.get('roles').find();
-    res.status(200).json({ roles });
+    res.status(200).json({ roles: hasPermission(req.user, "VIEW_ROLES") ? roles : [] });
+});
+
+app.put('/api/update_role', authTokenMiddleware, async (req : IGetUserAuthInfoRequest, res) => {
+    let { roleId, name, permissions } = req.body;
+
+    let language : string = req.headers['accept-language'] || defaultLanguage;
+
+    // Check if translation files support the requested language. If not switch to english
+    if(!translator.getPhrase('TEST', language)) language = defaultLanguage;
+
+    if(!roleId || !name || !permissions) {
+        logger.log(`${req.user.email} attempted to update role through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) but didn't provide enough fields`, 'API/UpdateRole');
+        return Error(translator.getPhrase('MISSING_FIELDS', language), 400, res);
+    }
+
+    if(!hasPermission(req.user, "EDIT_ROLES")) {
+        logger.log(`${req.user.email} attempted to update role through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort}) but didn't have enough permissions`, 'API/UpdateRole');
+        return Error(translator.getPhrase('MISSING_PERMISSIONS', language), 400, res);
+    }
+
+    db.get('roles').update({ _id: roleId }, { $set: { name, permissions } });
+
+    logger.log(`${req.user.email} successfully updated role ${name} (${roleId}) through ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}(:${req.socket.remotePort})`, 'API/UpdateRole');
+
+    res.status(200).json({ roles: hasPermission(req.user, "VIEW_ROLES") ? await db.get('roles').find() : [] });
 });
 
 //#endregion

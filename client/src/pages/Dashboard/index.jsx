@@ -9,6 +9,7 @@ import './Dashboard.css';
 import UserBox from './UserBox';
 import RoleCreator from './RoleCreator';
 import ButtonInput from '../../components/form/ButtonInput/ButtonInput';
+import RoleBox from './RoleBox';
 
 const Dashboard = () => {
 
@@ -47,6 +48,7 @@ const Dashboard = () => {
     return (
         <>
             {currentPopup && currentPopup}
+            <h1 style={{fontSize:'40px',color:'red'}}>DO NOT USE</h1>
             <h1>Dashboard</h1>
 
             <div className='userContainer'>
@@ -55,7 +57,7 @@ const Dashboard = () => {
                         setSelectedUser(user);
                     }}>{user.email}</li>)}
                 </ul>
-                {selectedUser && <div className='userBoxContainer'><UserBox user={selectedUser} /></div>}
+                {selectedUser && <div className='userBoxContainer'><UserBox user={selectedUser} roles={roles} /></div>}
             </div>
             <div className='roleContainer'>
                 <div className='roleListContainer'>
@@ -69,9 +71,7 @@ const Dashboard = () => {
                         }}>{role.name}</li>)}
                     </ul>
                 </div>
-                <div>
-                    {selectedRole && selectedRole.name}
-                </div>
+                {selectedRole && <RoleBox role={selectedRole} setRoles={setRoles} />}
             </div>
         </>
     )
