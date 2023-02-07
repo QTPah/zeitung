@@ -109,12 +109,65 @@ export const ApiProvider = ({ children }) => {
         return false;
     }
 
+    async function addRole(userId, roleId) {
+        let res = await Axios.post('/api/add_role', { userId, roleId }, { headers: { 'authorization': localStorage.getItem('token'), 'accept-language': localStorage.getItem('lang') }, validateStatus: () => true });
+
+        if(res.status === 200) {
+            return true;
+        }
+
+        return res.data.err;
+    }
+
+    async function removeRole(userId, roleId) {
+        let res = await Axios.delete('/api/remove_role', { data: { userId, roleId }, headers: { 'authorization': localStorage.getItem('token'), 'accept-language': localStorage.getItem('lang') }, validateStatus: () => true });
+
+        if(res.status === 200) {
+            return true;
+        }
+
+        return res.data.err;
+    }
+
+    async function createRole(name, permissions) {
+        let res = await Axios.post('/api/create_role', { name, permissions }, { headers: { 'authorization': localStorage.getItem('token'), 'accept-language': localStorage.getItem('lang') }, validateStatus: () => true });
+
+        if(res.status === 200) {
+            return res.data.roles;
+        }
+
+        return res.data.err;
+    }
+
+    async function deleteRole(id) {
+        let res = await Axios.delete('/api/delete_role', { data: { id }, headers: { 'authorization': localStorage.getItem('token'), 'accept-language': localStorage.getItem('lang') }, validateStatus: () => true });
+
+        if(res.status === 200) {
+            return true;
+        }
+
+        return res.data.err;
+    }
+
+    async function getRoles() {
+        let res = await Axios.get('/api/get_roles', { headers: { 'authorization': localStorage.getItem('token'), 'accept-language': localStorage.getItem('lang') }, validateStatus: () => true });
+
+        if(res.status === 200) {
+            return res.data.roles;
+        }
+
+        return res.data.err;
+    }
+
     const value = {
         uploadProfilePicture, uploadImage,
         getImage,
         getPost, getPosts, post,
         upload, download,
-        getUsers
+        getUsers,
+        addRole, removeRole,
+        createRole, deleteRole,
+        getRoles
     };
 
     return (

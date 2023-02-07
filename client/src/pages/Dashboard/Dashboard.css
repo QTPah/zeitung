@@ -3,3 +3,41 @@
     text-decoration: underline;
     list-style: none;
 }
+
+.userRoleList {
+    font-size: 20px;
+    text-decoration: underline;
+    list-style: none;
+}
+
+.userBox {
+    border: 1px solid rgb(94, 255, 0);
+}
+
+.userContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    border: 1px solid rgb(94, 255, 0);
+}
+
+.roleContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    border: 1px solid rgb(94, 255, 0);
+}
+
+.roleCreator {
+    padding: 2rem;
+}
+
+.roleList {
+    font-size: 20px;
+}

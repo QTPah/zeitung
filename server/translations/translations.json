@@ -110,5 +110,12 @@
             "en": "Email must end with @sbl.ch or @edu.sbl.ch!",
             "de": "Email muss mit @sbl.ch oder @edu.sbl.ch enden!"
         }
+    },
+    {
+        "id": "ROLE_NOT_FOUND",
+        "translations": {
+            "en": "Role not found!",
+            "de": "Rolle nicht gefunden!"
+        }
     }
 ]

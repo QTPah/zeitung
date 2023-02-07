@@ -11,7 +11,11 @@ const usePopup = () => {
         }}>{contents}</Popup>);
     }
 
-    return [popup, currentPopup]
+    const closePopup = () => {
+        setCurrentPopup();
+    }
+
+    return [popup, currentPopup, closePopup];
 }
 
 export default usePopup;
