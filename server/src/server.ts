@@ -117,7 +117,10 @@ async function authTokenMiddleware(req : IGetUserAuthInfoRequest, res : express.
 
       if(!user) return res.sendStatus(403);
 
-      if(Blacklist.instance.isBlacklisted(user.email)) return res.status(403).json({ err: 'BLACKLIST' });
+      if(Blacklist.instance.isBlacklisted(user.email)) {
+        logger.log(`${user.email} tried to access site but got blacklisted 🤡`, "Blacklist");
+        return res.status(403).json({ err: 'BLACKLIST' });
+      }
 
       req.user = await db.get('users').findOne({ _id: user._id });
   } catch(error) {
